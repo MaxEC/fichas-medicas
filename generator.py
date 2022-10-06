@@ -14,6 +14,7 @@ if __name__ == '__main__':
         for row in reader:
             fichas.append(FichaMedica(row))
 
+    fichas.sort(key=lambda x: (x.unidad, x.apellido_paterno))
     doc = DocxTemplate('template.docx')
     context = {'fichas': fichas}
     doc.render(context)
