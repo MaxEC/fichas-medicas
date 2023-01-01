@@ -9,7 +9,7 @@ class FichaMedica():
         self.nombre = ' '.join(row[1].split()).title()
         self.apellido_paterno = ' '.join(row[2].split()).title()
         self.apellido_materno = ' '.join(row[3].split()).title()
-        self.rut = row[4]
+        self.rut = rut_chile.format_rut_with_dots(row[4].strip())
         self.fecha_de_nacimiento = row[5]
         self.domicilio = row[6].title()
         self.sistema_de_salud = row[7].title()
