@@ -13,7 +13,7 @@ if __name__ == '__main__':
         reader = csv.reader(csvfile, delimiter=input_delimitador)
         next(reader)
         for row in reader:
-            if row[1] == "":
+            if row[1] == "" or "no han habido cambios" in row[-2]:
                 continue
             f = FichaMedica(row)
             if f.rut in ruts:
