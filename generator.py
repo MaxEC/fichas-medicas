@@ -13,6 +13,8 @@ if __name__ == '__main__':
         reader = csv.reader(csvfile, delimiter=input_delimitador)
         next(reader)
         for row in reader:
+            if row[1] == "":
+                continue
             f = FichaMedica(row)
             if f.rut in ruts:
                 # replace for newer entrance
