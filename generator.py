@@ -4,8 +4,8 @@ from docxtpl import DocxTemplate
 from models import FichaMedica
 
 if __name__ == '__main__':
-    input_csv = f'Fichas Médicas 2022.csv'
-    input_delimitador = ','
+    input_csv = f'Fichas Médicas Campamento Verano 2024.csv'
+    input_delimitador = ';'
 
     fichas = []
     ruts = []
@@ -28,4 +28,4 @@ if __name__ == '__main__':
     doc = DocxTemplate('template.docx')
     context = {'fichas': fichas}
     doc.render(context)
-    doc.save('Fichas Médicas 2022.docx')
+    doc.save('Fichas Médicas.docx')
