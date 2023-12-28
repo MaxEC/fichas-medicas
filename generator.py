@@ -13,8 +13,6 @@ if __name__ == '__main__':
         reader = csv.reader(csvfile, delimiter=input_delimitador)
         next(reader)
         for row in reader:
-            if row[1] == "" or "no han habido cambios" in row[-2]:
-                continue
             f = FichaMedica(row)
             if f.rut in ruts:
                 # replace for newer entrance
@@ -25,6 +23,7 @@ if __name__ == '__main__':
                 ruts.append(f.rut)
 
     fichas.sort(key=lambda x: (x.unidad, x.apellido_paterno))
+    print(len(fichas))
     doc = DocxTemplate('template.docx')
     context = {'fichas': fichas}
     doc.render(context)
