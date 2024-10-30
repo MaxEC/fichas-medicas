@@ -1,30 +1,14 @@
-import csv
-from docxtpl import DocxTemplate
-
-from models import FichaMedica
+from methods import cargar_fichas_antiguas, procesar_nuevas_y_combinar, generar_documento
 
 if __name__ == '__main__':
-    input_csv = f'Fichas Médicas Campamento Verano 2024.csv'
-    input_delimitador = ';'
-
-    fichas = []
-    ruts = []
-    with open(input_csv, newline='') as csvfile:
-        reader = csv.reader(csvfile, delimiter=input_delimitador)
-        next(reader)
-        for row in reader:
-            f = FichaMedica(row)
-            if f.rut in ruts:
-                # replace for newer entrance
-                index = ruts.index(f.rut)
-                fichas[index] = f
-            else:
-                fichas.append(f)
-                ruts.append(f.rut)
-
-    fichas.sort(key=lambda x: (x.unidad, x.apellido_paterno))
-    print(len(fichas))
-    doc = DocxTemplate('template.docx')
-    context = {'fichas': fichas}
-    doc.render(context)
-    doc.save('Fichas Médicas.docx')
+    archivo_antiguas = 'antiguas.csv'
+    archivo_nuevas = 'nuevas.csv'
+    
+    # Cargar fichas de antiguas.csv
+    fichas_antiguas = cargar_fichas_antiguas(archivo_antiguas)
+    
+    # Procesar nuevas.csv y combinar datos
+    fichas_finales = procesar_nuevas_y_combinar(archivo_nuevas, fichas_antiguas)
+    
+    # Generar documento final
+    generar_documento(fichas_finales)
