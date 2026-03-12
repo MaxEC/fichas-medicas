@@ -1,8 +1,8 @@
 from methods import cargar_fichas_antiguas, procesar_nuevas_y_combinar, generar_documento
 
 if __name__ == '__main__':
-    archivo_antiguas = 'antiguas.csv'
-    archivo_nuevas = 'nuevas.csv'
+    archivo_antiguas = 'FICHAS ANTIGUAS.csv'
+    archivo_nuevas = 'FICHAS NUEVAS.csv'
     
     # Cargar fichas de antiguas.csv
     fichas_antiguas = cargar_fichas_antiguas(archivo_antiguas)

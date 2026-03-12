@@ -23,11 +23,12 @@ def cargar_fichas_antiguas(archivo_antiguas):
         next(reader)
         for row in reader:
             fecha_ficha = parse_fecha(row[0])  # Marca temporal
-            rut = normalize_rut(row[5].strip())  # Normalizar RUT
+            rut = normalize_rut(row[4].strip())  # Normalizar RUT
             
             # Almacenar solo la ficha más reciente por RUT
             if rut not in fichas_antiguas or fecha_ficha > parse_fecha(fichas_antiguas[rut][0]):
                 fichas_antiguas[rut] = row
+    print(f'Fichas antiguas cargadas: {len(fichas_antiguas)}')
     return fichas_antiguas
 
 # Procesar nuevas.csv y actualizar con fichas antiguas si no hubo cambios
@@ -37,15 +38,15 @@ def procesar_nuevas_y_combinar(archivo_nuevas, fichas_antiguas):
         reader = csv.reader(csvfile, delimiter=',')
         next(reader)
         for row in reader:
-            rut = normalize_rut(row[5].strip())  # Normalizar RUT
-            cambios = row[1].strip().lower()  # Respuesta sobre cambios
+            rut = normalize_rut(row[4].strip())  # Normalizar RUT
 
             # Revisar si no hay cambios en los datos y usar ficha antigua
-            if rut in fichas_antiguas and 'no han habido cambios' in cambios:
+            if rut in fichas_antiguas:
                 ficha_final = FichaMedica(fichas_antiguas[rut])  # Usar ficha antigua
             else:
                 ficha_final = FichaMedica(row)  # Usar la nueva ficha
                 fichas_antiguas[rut] = row  # Actualizar o agregar en fichas antiguas
+            print(f'Procesando ficha: {ficha_final.nombre} {ficha_final.apellido_paterno} - RUT: {ficha_final.rut}')
             fichas_finales.append(ficha_final)
     
     # Eliminar duplicados de la lista final usando RUT como clave
